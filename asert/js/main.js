@@ -71,6 +71,7 @@ function addtocartfromproducts(db) {
             window.localStorage.setItem("cart", JSON.stringify(db.cart))
             printcarttoprodution(db)
             printtotal(db)
+            hanlemodcart(db)
         }
     })
 
@@ -140,6 +141,7 @@ function selectcanshoper(db) {
         window.localStorage.setItem('cart', JSON.stringify(db.cart))
         printcarttoprodution(db)
         printtotal(db)
+        hanlemodcart(db)
     })
 
 }
@@ -185,9 +187,18 @@ function hanletotal(db) {
         printproduction(db)
         printtotal(db)
         printcarttoprodution(db)
+        hanlemodcart(db)
     })
 }
-
+function hanlemodcart(db) {
+    const amountproducthtml=document.querySelector(".amountproducts")
+    let amount=0
+    for (const product in db.cart) {
+       amount+=db.cart[product].amount
+            
+        }
+    amountproducthtml.textContent=amount
+}
 async function main() {
     const db = {
         products: JSON.parse(window.localStorage.getItem("products")) || (await getproducts()),
@@ -202,5 +213,6 @@ async function main() {
     selectcanshoper(db)
     printtotal(db)
     hanletotal(db)
+    hanlemodcart(db)
 }
 main()
